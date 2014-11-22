@@ -18,10 +18,6 @@ public class KafkaTopologyDebug {
 	
 	public static void main(String[] args) throws AlreadyAliveException, InvalidTopologyException {
 		
-		/*if(args.length > 0) {
-			topic = args[0];
-		}*/
-		
 		// configure kafka spout
 		ZkHosts zkHosts = new ZkHosts("localhost:2181");
 		SpoutConfig kafkaConfig = new SpoutConfig(zkHosts, topic, "", "id7");
