@@ -43,7 +43,7 @@ public class LiveJournalProducer {
 			KeyedMessage<String, String> data = new KeyedMessage<String, String>(TOPIC_ID, line);
 			producer.send(data);
 			// XXX DEBUG just to give some feedback
-			if(tick == 50) break; // FIXME DEBUG
+			//if(tick == 50) break; // DEBUG
 			if ((tick++ % 68994) == 0) {
 				Double percent = (((double) tick) / 68993777 * 100);
 				System.out.println("" + percent + "% completed");

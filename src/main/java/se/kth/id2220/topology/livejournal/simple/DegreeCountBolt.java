@@ -1,4 +1,4 @@
-package se.kth.id2220.topology.livejournal;
+package se.kth.id2220.topology.livejournal.simple;
 
 import java.util.Hashtable;
 
@@ -7,7 +7,7 @@ import backtype.storm.topology.OutputFieldsDeclarer;
 import backtype.storm.topology.base.BaseBasicBolt;
 import backtype.storm.tuple.Tuple;
 
-public class DegreeCountAckBolt extends BaseBasicBolt {
+public class DegreeCountBolt extends BaseBasicBolt {
 
 	private static final long serialVersionUID = 1L;
 
@@ -36,7 +36,7 @@ public class DegreeCountAckBolt extends BaseBasicBolt {
 
 	@Override
 	public void declareOutputFields(OutputFieldsDeclarer declarer) {
-
+		// nothing to declare
 	}
 
 }
