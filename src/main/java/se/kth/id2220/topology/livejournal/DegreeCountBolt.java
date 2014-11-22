@@ -7,35 +7,12 @@ import backtype.storm.topology.OutputFieldsDeclarer;
 import backtype.storm.topology.base.BaseBasicBolt;
 import backtype.storm.tuple.Tuple;
 
-import com.datastax.driver.core.Cluster;
-import com.datastax.driver.core.Host;
-import com.datastax.driver.core.Metadata;
-import com.datastax.driver.core.Session;
-
 public class DegreeCountBolt extends BaseBasicBolt {
 
 	private static final long serialVersionUID = 1L;
-	private static final String CASSANDRA_HOST = "localhost";
-	private static final int CASSANDRA_PORT = 9042;
-	
+
 	Hashtable<Integer, Integer> outDegrees = new Hashtable<Integer, Integer>();
 	Hashtable<Integer, Integer> inDegrees = new Hashtable<Integer, Integer>();
-	
-	// Cassandra
-	private Cluster cluster;
-	private Session session;
-	
-	public DegreeCountBolt() {
-		super();
-		// connect to cassandra
-		this.cluster = Cluster.builder().addContactPoint(CASSANDRA_HOST).withPort(CASSANDRA_PORT).build();
-		final Metadata metadata = cluster.getMetadata();
-		System.out.printf("Connected to Cassandra cluster %s\n", metadata.getClusterName());
-		for(final Host host : metadata.getAllHosts()) {
-			System.out.printf("Datacenter %s; Host %s; Rack %s", host.getDatacenter(), host.getAddress(), host.getRack());
-		}
-		session = cluster.connect();
-	}
 
 	@Override
 	public void execute(Tuple input, BasicOutputCollector collector) {
@@ -47,17 +24,19 @@ public class DegreeCountBolt extends BaseBasicBolt {
 		int v1_degree = (inDegrees.containsKey(v1) ? inDegrees.get(v1) : 0) + 1;
 		outDegrees.put(v0, v0_degree);
 		inDegrees.put(v1, v1_degree);
-		
-		System.out.println("************************************************");
-		System.out.println(outDegrees);
-		System.out.println("************************************************");
-		System.out.println(inDegrees);
-		System.out.println("************************************************");
+		/*
+		 * System.out.println("************************************************")
+		 * ; System.out.println(outDegrees);
+		 * System.out.println("************************************************"
+		 * ); System.out.println(inDegrees);
+		 * System.out.println("************************************************"
+		 * );
+		 */
 	}
 
 	@Override
 	public void declareOutputFields(OutputFieldsDeclarer declarer) {
-		
+
 	}
 
 }
