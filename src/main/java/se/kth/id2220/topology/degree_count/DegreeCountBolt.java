@@ -1,4 +1,4 @@
-package se.kth.id2220.topology.livejournal.simple;
+package se.kth.id2220.topology.degree_count;
 
 import java.util.Hashtable;
 
