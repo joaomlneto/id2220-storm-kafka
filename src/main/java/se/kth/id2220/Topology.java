@@ -31,7 +31,7 @@ public class Topology {
 	/**
 	 * How many seconds should we run topology in local mode
 	 */
-	public static final int TOPOLOGY_LOCAL_TIME = 20000; // milliseconds
+	public static final int TOPOLOGY_LOCAL_TIME = 60000; // milliseconds
 
 	public static void main(String[] args) throws FileNotFoundException, IOException, ParseException, InstantiationException, IllegalAccessException, ClassNotFoundException, AlreadyAliveException, InvalidTopologyException {
 
@@ -64,15 +64,9 @@ public class Topology {
 			return;
 		}
 
-		// setup a kafka spout
-		ZkHosts zkHosts = new ZkHosts(cmd.getOptionValue("kafka"));
-		SpoutConfig kafkaConfig = new SpoutConfig(zkHosts, cmd.getOptionValue("topic"), "", "id7");
-		kafkaConfig.scheme = new SchemeAsMultiScheme(new StringScheme());
-		kafkaConfig.forceFromStart = true;
-
 		// Check which topology to run
 		StormTopologyFactory topologyFactory = (StormTopologyFactory) Class.forName(cmd.getOptionValue("topology")).newInstance();
-		StormTopology topology = topologyFactory.createTopology(new KafkaSpout(kafkaConfig));
+		StormTopology topology = topologyFactory.createTopology(cmd);
 
 		// submit topology
 		if (cmd.getOptionValue("cluster").equals("local")) {

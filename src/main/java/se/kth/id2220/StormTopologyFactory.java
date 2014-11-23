@@ -1,8 +1,9 @@
 package se.kth.id2220;
 
-import storm.kafka.KafkaSpout;
+import org.apache.commons.cli.CommandLine;
+
 import backtype.storm.generated.StormTopology;
 
 public interface StormTopologyFactory {
-	public StormTopology createTopology(KafkaSpout kafkaSpout);
+	public StormTopology createTopology(CommandLine cmd);
 }

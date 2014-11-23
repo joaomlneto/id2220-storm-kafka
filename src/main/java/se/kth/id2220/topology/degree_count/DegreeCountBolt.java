@@ -19,7 +19,7 @@ public class DegreeCountBolt extends BaseBasicBolt {
 		String[] edge = input.getString(0).split("\t");
 		int v0 = Integer.parseInt(edge[0]);
 		int v1 = Integer.parseInt(edge[1]);
-		System.out.println(edge[0] + "->" + edge[1]);
+		//System.out.println(edge[0] + "->" + edge[1]);
 		int v0_degree = (outDegrees.containsKey(v0) ? outDegrees.get(v0) : 0) + 1;
 		int v1_degree = (inDegrees.containsKey(v1) ? inDegrees.get(v1) : 0) + 1;
 		outDegrees.put(v0, v0_degree);
