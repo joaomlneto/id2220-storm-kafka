@@ -27,6 +27,7 @@ public class DegreeCountTopology implements StormTopologyFactory {
 		kafkaConfig.forceFromStart = true;
 		KafkaSpout kafkaSpout = new KafkaSpout(kafkaConfig);
 		
+		// build topology
 		TopologyBuilder builder = new TopologyBuilder();
 		builder.setSpout("KafkaSpout", kafkaSpout, 5);
 		builder.setBolt("DegreeCountBolt", new DegreeCountBolt(), 5).shuffleGrouping("KafkaSpout");
