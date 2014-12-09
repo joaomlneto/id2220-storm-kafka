@@ -1,4 +1,4 @@
-package se.kth.id2220.monitor;
+package se.kth.id2220.metric;
 
 import java.util.HashMap;
 import java.util.Iterator;

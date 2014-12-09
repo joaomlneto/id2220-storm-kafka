@@ -1,4 +1,4 @@
-package se.kth.id2220.monitor;
+package se.kth.id2220.metric;
 
 import org.apache.thrift7.protocol.TBinaryProtocol;
 import org.apache.thrift7.transport.TFramedTransport;

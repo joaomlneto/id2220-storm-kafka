@@ -3,6 +3,11 @@ package se.kth.id2220.producer;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.Properties;
+import java.util.concurrent.TimeUnit;
+
+import com.codahale.metrics.ConsoleReporter;
+import com.codahale.metrics.Meter;
+import com.codahale.metrics.MetricRegistry;
 
 import se.kth.id2220.KafkaProducer;
 import kafka.javaapi.producer.Producer;
@@ -16,14 +21,20 @@ import kafka.producer.ProducerConfig;
 public class LineProducer implements KafkaProducer {
 
 	public static final int FEEDBACK_INTERVAL = 10000;
+	
+	static final MetricRegistry producerMetrics = new MetricRegistry();
 
 	@Override
 	public void produce(ProducerConfig kafkaConfig, BufferedReader reader, String topic) throws IOException {
 		String line;
-		long tick = 0;
 
 		// Setup Kafka producer
 		Producer<String, String> producer = new Producer<String, String>(kafkaConfig);
+		
+		// Setup metrics
+		ConsoleReporter reporter = ConsoleReporter.forRegistry(producerMetrics).convertRatesTo(TimeUnit.SECONDS).build();
+		reporter.start(5, TimeUnit.SECONDS);
+		Meter records = producerMetrics.meter("records");
 
 		// Produce loop
 		while ((line = reader.readLine()) != null) {
@@ -36,9 +47,7 @@ public class LineProducer implements KafkaProducer {
 			producer.send(data);
 
 			// give some feedback
-			if ((++tick % FEEDBACK_INTERVAL) == 0) {
-				System.out.println("Sent " + tick + " messages");
-			}
+			records.mark();
 		}
 	}
 }
