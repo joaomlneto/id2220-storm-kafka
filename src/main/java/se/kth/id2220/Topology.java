@@ -65,6 +65,9 @@ public class Topology {
 		
 		// Storm configuration
 		Config stormConf = new Config();
+		
+		// Storm cluster default configuration values
+		stormConf.put(Config.TOPOLOGY_EXECUTOR_RECEIVE_BUFFER_SIZE, 128);
 
 		// submit topology
 		if (cmd.getOptionValue("cluster").equals("local")) {
